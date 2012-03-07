@@ -74,7 +74,7 @@ USAGE
 
 sub read_pod {
     my $pod = shift;
-    my $cmd = "perldoc";
+    my $cmd = "perldoc ";
     $cmd .= " -m " if $opt{m};
     pod_path $pod if $opt{l};
     $cmd .= $pod;
