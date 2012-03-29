@@ -1,4 +1,3 @@
-#-*- coding: utf-8 -*-
 
 use Carp qw/croak/;
 use Smart::Comments;
@@ -35,5 +34,5 @@ sub bin_search {
 }
 
 #--------------------------------------------
-my $a = [1,3,2,4];
-print bin_search($a, 2);
+my $a = [1,2,4];
+print bin_search($a, 5);

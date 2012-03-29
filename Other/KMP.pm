@@ -1,4 +1,3 @@
-package KMP;
 
 use warnings;
 use strict 'vars';
