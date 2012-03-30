@@ -23,6 +23,8 @@ sub size {
     scalar @$self;
 }
 
+1;
+
 package main;
 my $q = Queue->new;
 $q->add(1,2,3,4,5);
