@@ -25,6 +25,8 @@ sub size {
 
 1;
 
+__END__
+
 package main;
 my $s = Stack->new;
 $s->stack_push(1, 2, 3, 4, 5);

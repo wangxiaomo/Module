@@ -3,11 +3,52 @@ use warnings;
 use strict 'vars';
 
 package Helper;
+sub METHOD {
+    my $param  = shift;
+    my $method = {
+        LEVEL_VIEW  =>  \&LEVEL_VIEW,
+        LVR         =>  \&LVR,
+        VLR         =>  \&VLR,
+        LRV         =>  \&LRV,
+    };
+    return $method->{$param};
+}
+
+sub LEVEL_VIEW {
+    my ($node, $func) = @_;
+    use Queue;
+    my $queue = Queue->new;
+    my $add_node_to_queue; $add_node_to_queue = sub {
+        my $node = shift;
+        $queue->add($node);
+        $add_node_to_queue->($node->{LEFT})  if defined($node->{LEFT});
+        $add_node_to_queue->($node->{RIGHT}) if defined($node->{RIGHT});
+    };
+
+    $add_node_to_queue->($node);
+    while ($queue->size) {
+        my $node = $queue->get;
+        $func->($node);
+    }
+}
+
 sub LVR {
     my ($node, $func) = @_;
     LVR($node->{LEFT}, $func) if defined($node->{LEFT});
-    $func->($node->{DATA});
+    $func->($node);
     LVR($node->{RIGHT}, $func) if defined($node->{RIGHT});
+}
+sub VLR {
+    my ($node, $func) = @_;
+    $func->($node);
+    VLR($node->{LEFT}, $func) if defined($node->{LEFT});
+    VLR($node->{RIGHT}, $func) if defined($node->{RIGHT});
+}
+sub LRV {
+    my ($node, $func) = @_;
+    LRV($node->{LEFT}, $func) if defined($node->{LEFT});
+    LRV($node->{RIGHT}, $func) if defined($node->{RIGHT});
+    $func->($node);
 }
 
 package TreeNode;
@@ -49,6 +90,13 @@ sub do_LVR {
     Helper::LVR($root, $func);
 }
 
+sub do_recursion_view {
+    my ($self, $recursion_method, $func) = @_;
+    ### $recursion_method
+    return if $self->{NODENUMS} == 0;
+    $recursion_method->($self->{ROOT}, $func);
+}
+
 1;
 
 package main;
@@ -69,7 +117,12 @@ use Smart::Comments;
 ### $tree
 
 my $f = sub {
-    my $data = shift;
-    print $data->{data}, "\n";
+    my $node = shift;
+    print $node->{DATA}->{data}, "\n";
 };
 $tree->do_LVR($f);
+$tree->do_recursion_view(
+    Helper::METHOD("LVR"),
+    $f
+);
+Helper::METHOD("LEVEL_VIEW")->($tree->{ROOT}, $f);
