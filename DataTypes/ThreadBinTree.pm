@@ -97,6 +97,7 @@ sub view {
 
 1;
 
+__END__
 package main;
 my $nodeA = TreeNode->new;
 $nodeA->{DATA}->{data} = "i'm nodeA!";
@@ -131,5 +132,6 @@ my $f = sub {
 };
 $tree->pretreat;
 $tree->view($f);
+
 __END__
 线索二叉树为了方便加入一个空的头结点。
