@@ -99,6 +99,7 @@ sub do_recursion_view {
 
 1;
 
+__END__
 package main;
 my $nodeA = TreeNode->new;
 $nodeA->{DATA}->{'data'} = "i'm node A";
