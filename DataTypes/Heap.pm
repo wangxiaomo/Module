@@ -72,6 +72,8 @@ sub pop {
     return $node;   
 }
 
+1;
+__END__
 package main;
 my $heap  = Heap->new;
 $heap->{FLAG} = '<';
