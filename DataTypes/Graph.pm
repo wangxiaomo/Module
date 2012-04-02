@@ -10,6 +10,7 @@ sub new {
         EDGES       =>  [],
         VERTEXNUMS  =>  0,
         EDGENUMS    =>  0,
+        VALUEFLAG   =>  0,
     };
     bless $self, $class;
 }
@@ -18,13 +19,18 @@ sub _is_in_graph {
     my $self   = shift;
     my $vertex = shift;
     
-    #TODO:
+    return grep {
+        $vertex eq $_
+    } @{$self->{VERTEXS}};
 } 
 
 sub add_vertex {
     my $self   = shift;
     my $vertex = shift;
-    #TODO:
+    if (not $self->_is_in_graph($vertex)) {
+        carp "Vertex $vertex Have Already Been Added!";
+        return;
+    }
     push @{$self->{VERTEXS}}, $vertex;
     $self->{VERTEXNUMS} += 1;
 }
@@ -32,5 +38,5 @@ sub add_vertex {
 sub add_edge {
     my $self = shift;
     my $edge = shift;
-    #TODO:
+    #TODO:   
 }
