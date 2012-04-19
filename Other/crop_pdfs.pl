@@ -14,7 +14,7 @@ my $crop_cmd  = $ENV{BRISS}
 my $pdfs      = get_all_pdfs($directory);
 foreach my $pdf (@$pdfs) {
     $pdf =~ s/ /\\ /g;
-    my $cmd = $crop_cmd . $pdf;
+    my $cmd = $crop_cmd . "\"" . $pdf . "\"";
     print "executing: $cmd\n";
     system $cmd;
 }
